@@ -1,0 +1,150 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+//generator client {
+//  provider = "prisma-client"
+//  output   = "../app/generated/prisma"
+//}
+
+//datasource db {
+//  provider = "postgresql"
+//}
+
+// prisma/schema.prisma
+
+datasource db {
+  provider = "mysql"
+  // ❌ ELIMINADO: url = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"] // Por si el flag sigue siendo necesario en esta release menor
+}
+
+// 🏢 1. CUENTA / INQUILINO (Multi-tenant base)
+model Account {
+  id          String   @id @default(uuid())
+  name        String   // Ej: "Familia Pérez", "Empresa DiTodo"
+  createdAt   DateTime @default(now())
+  
+  // Relaciones
+  users       User[]
+  groups      Group[]
+  tasks       Task[]
+  files       FileAsset[]
+}
+
+// 👤 2. PERFIL DE USUARIO
+model User {
+  id             String   @id @default(uuid())
+  accountId      String
+  account        Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  
+  // Credenciales y Accesos
+  alias          String?  @unique // Nombre de usuario alternativo para login
+  email          String   @unique
+  passwordHash   String   // Contraseña encriptada (NUNCA texto plano)
+  
+  // Datos Personales
+  nombre         String
+  apellido       String
+  whapp          String?  // Ej: +5491123456789
+  nacionalidad   String?
+  
+  // Ubicación
+  direccion      String?
+  localidad      String?
+  cp             String?  // Código Postal
+  pais           String?
+  
+  // Multimedia y Sistema
+  avatarUrl      String?  // Ruta del ícono o logo del perfil
+  storagePath    String   // Ej: /storage/users/{id}/ - Directorio raíz del usuario
+  
+  // Configuraciones (JSON para flexibilidad)
+  settings       Json?    // Preferencias de notificaciones, temas oscuros, etc.
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relaciones
+  groups         UserGroup[]
+  tasksAssigned  Task[]      @relation("TaskAssignee")
+  files          FileAsset[]
+}
+
+// 👥 3. GRUPOS Y DEPARTAMENTOS
+model Group {
+  id          String   @id @default(uuid())
+  accountId   String
+  account     Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  name        String   // Ej: "Marketing", "Estudios"
+  description String?
+  
+  // Relaciones
+  members     UserGroup[]
+  createdAt   DateTime @default(now())
+}
+
+// 🤝 3.1 TABLA INTERMEDIA: USUARIOS <> GRUPOS
+model UserGroup {
+  userId      String
+  groupId     String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group       Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  role        String   @default("MEMBER") // ADMIN, MEMBER, VIEWER
+
+  @@id([userId, groupId]) // Llave primaria compuesta
+}
+
+// 📝 4. TAREAS Y ACTIVIDADES (Calendario/Cronograma)
+model Task {
+  id          String   @id @default(uuid())
+  accountId   String
+  account     Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  
+  title       String
+  description String?  @db.Text
+  status      String   @default("DRAFT") // DRAFT, IN_PROGRESS, DONE
+  
+  // Tiempos y Cronogramas
+  startDate   DateTime?
+  endDate     DateTime?
+  isAllDay    Boolean  @default(false)
+  
+  // Asignación
+  assigneeId  String?
+  assignee    User?    @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relaciones
+  attachments FileAsset[]
+}
+
+// 📂 5. REPOSITORIO DE ARCHIVOS Y LOGS
+model FileAsset {
+  id          String   @id @default(uuid())
+  accountId   String
+  account     Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  
+  // Dueño del archivo
+  uploaderId  String
+  uploader    User     @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
+  
+  // Metadatos del archivo
+  fileName    String   // Ej: "presupuesto.pdf", "nota_voz_1.mp3"
+  mimeType    String   // Ej: "application/pdf", "audio/mpeg"
+  sizeBytes   Int      // Tamaño para controlar cuotas de disco
+  filePath    String   // Path exacto en el CentOS. Ej: /storage/users/123/docs/2026/05/presupuesto.pdf
+  
+  // Relación opcional con tareas (si se subió dentro de una actividad)
+  taskId      String?
+  task        Task?    @relation(fields: [taskId], references: [id], onDelete: SetNull)
+
+  uploadedAt  DateTime @default(now())
+}

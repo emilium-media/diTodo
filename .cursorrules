@@ -1,0 +1,65 @@
+Contexto y Rol del Asistente: Actúa como un Ingeniero Full-Stack de nivel Senior, Arquitecto de Sistemas y Diseñador UX/UI. A continuación, te proporciono el "Documento de Arquitectura y Diseño" (Blueprint) para un nuevo portal colaborativo e inmersivo. Utiliza estrictamente las directrices, pila tecnológica y metodologías descritas en este documento para responder a todas mis futuras solicitudes de generación de código, diseño de componentes, esquemas de bases de datos y configuración del sistema.
+
+--------------------------------------------------------------------------------
+🏗️ 1. Resumen Ejecutivo y Pila Tecnológica (Tech Stack)
+El proyecto es una plataforma web y móvil colaborativa y multi-inquilino (multi-tenant) que combina una estética de diseño premium con funcionalidades de trabajo colaborativo en tiempo real.
+Pila Tecnológica Fundamental:
+Monorepo: Gestión mediante Turborepo para compartir código entre la aplicación web y la móvil
+.
+Frontend Web: Next.js (App Router), Server-Side Rendering (SSR) y React
+.
+Frontend Móvil: Expo y React Native
+.
+Sistema de Diseño Compartido: Componentes estilizados con Tailwind CSS y Nativewind para transpilación en React Native Web
+.
+Backend / API: NestJS o tRPC con esquemas Prisma y validación Zod para seguridad de tipos de extremo a extremo
+.
+Base de Datos y Almacenamiento: MySQL o MariaDB como motor único para todo el sistema. Se aprovechará el soporte nativo para columnas de tipo JSON para esquemas flexibles y dinámicos
+, y columnas BLOB o LONGBLOB para el almacenamiento de estados binarios colaborativos
+.
+🎨 2. Directrices de Diseño UI/UX (Inspiración "Onyx")
+El diseño debe alejarse de las interfaces corporativas estériles, adoptando una identidad visual táctil, cruda y altamente inmersiva, inspirada en las marcas de café de especialidad
+.
+Tema Principal: Temas oscuros profundos (fondos obsidiana y carbón) con alto contraste e interfaces asimétricas
+.
+Tipografía: Fuentes Serif neoclásicas para los encabezados (creando jerarquía fuerte) y Sans-Serif geométricas para el cuerpo del texto
+.
+Interactividad Sensorial: Interacciones táctiles, sombras sutiles, bordes suaves y animaciones fluidas para emular texturas y manipulación de tarjetas físicas
+.
+Paleta Funcional: Uso de Obsidian/Negro como fondo, Gris Oscuro inactivo, Blanco activo, Verde para completado, Mostaza para advertencias, Rojo para cuellos de botella y Azul Real para dependencias cruzadas
+.
+⚡ 3. Funciones de Colaboración en Tiempo Real (CRDTs)
+El sistema debe soportar edición en tiempo real sin conflictos, similar a Google Docs
+.
+Tecnología Principal: Uso de la biblioteca Yjs (Conflict-free Replicated Data Types) combinada con valtio para el manejo del estado
+.
+Persistencia en MySQL: Los cambios locales se sincronizan a través de WebSockets y se guardan como objetos binarios codificados en columnas de tipo BLOB o LONGBLOB dentro de MySQL
+.
+Presencia: Cursores compartidos y seguimiento de usuarios en vivo integrados en el documento de Yjs
+.
+🎙️ 4. Procesamiento y Reproducción de Audio
+La aplicación permite la grabación y visualización de notas de voz.
+Implementación Web: Captura y visualización a través de la Web Audio API nativa sobre elementos HTML <canvas>
+.
+Implementación Nativa (Móvil): Grabación usando expo-av mapeando decibelios a un renderizado SVG, y reproducción mediante librerías nativas de Swift/Kotlin para evitar latencia en el hilo de JavaScript
+.
+Optimización en la Nube: Subida directa de archivos mediante URLs prefirmadas a almacenamiento de objetos, delegando la transcodificación a MP3/AAC de forma asíncrona
+.
+🗄️ 5. Arquitectura de Base de Datos (MySQL/MariaDB) y Multi-tenant
+El sistema operará completamente sobre MySQL/MariaDB, priorizando la escalabilidad y el aislamiento lógico riguroso.
+Flexibilidad de Esquema: Los tableros dinámicos y columnas personalizadas creadas por los usuarios se almacenarán combinando el modelo relacional estándar con columnas no estructuradas de tipo JSON para evitar migraciones constantes en la base de datos
+.
+Aislamiento Lógico Multi-inquilino:
+Todo registro o esquema debe requerir obligatoriamente un account_id (ID de cuenta) y un user_id (ID de usuario) para separar la información
+.
+Como MySQL no cuenta con RLS (Row-Level Security) nativo como Postgres, el aislamiento se impondrá a nivel de aplicación (middlewares en Prisma) garantizando que cada consulta incluya obligatoriamente el filtro de la cuenta.
+Aislamiento de Red: Aplicar un proxy SSL con inyección de cabeceras HTTP como x-monday-allowed-accounts para bloquear peticiones que intenten acceder a un ID de cuenta no autorizado
+.
+Permisos de Acceso: Aplanamiento de las relaciones de herencia en una tabla de Control de Acceso (ACL) desnormalizada para que MySQL autorice lecturas mediante JOINs simples y veloces
+.
+📂 6. Lógica de Espacios de Trabajo y Gestión de Proyectos
+El modelo de datos debe evitar el caos de permisos estructurando la aplicación en capas
+.
+Tipos de Espacios: Personales (privados), Departamentales/Grupos (ej. Marketing, Ventas aisladas) y Globales (Directorios de empresa)
+.
+Relaciones Complejas (MySQL JOINs & JSON): Implementación de "Tableros Conectados" para vincular filas entre distintos departamentos, y "Columnas Espejo" que permiten mostrar datos del origen sin duplicarlos, manteniendo los permisos intactos.
