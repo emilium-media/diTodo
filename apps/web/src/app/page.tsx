@@ -2,9 +2,8 @@ export default function Home() {
     return (
         <div className="flex min-h-screen bg-neutral-950 text-neutral-50 selection:bg-blue-600 selection:text-white">
 
-            {/* PANEL IZQUIERDO: Branding Asimétrico y Textura Oscura (Inspiración Onyx) */}
+            {/* PANEL IZQUIERDO: Branding Asimétrico y Textura Oscura */}
             <div className="hidden lg:flex w-1/2 flex-col justify-between p-12 relative overflow-hidden bg-[#0a0a0a] border-r border-neutral-800">
-                {/* Luces volumétricas sutiles para efecto premium */}
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-neutral-800/30 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] bg-blue-900/20 blur-[120px] rounded-full pointer-events-none" />
 
@@ -26,7 +25,6 @@ export default function Home() {
             <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-8 lg:p-24 relative bg-neutral-950">
                 <div className="w-full max-w-sm space-y-10">
 
-                    {/* Encabezado Móvil (Solo visible en pantallas chicas) */}
                     <div className="lg:hidden mb-12 text-center">
                         <h1 className="text-4xl font-serif tracking-tight text-neutral-200 mb-2">DiTodo<span className="text-blue-600">.</span></h1>
                         <p className="text-neutral-400">Trabaja más inteligente.</p>
@@ -37,11 +35,8 @@ export default function Home() {
                         <p className="text-neutral-400 text-lg">¿Qué quieres gestionar hoy?</p>
                     </div>
 
-                    {/* Área de Acciones Táctiles */}
                     <div className="space-y-6 pt-4">
-
-                        {/* Botón de Google Estilo Premium */}
-                        <button className="w-full flex items-center justify-center gap-3 px-4 py-3.5 bg-white text-neutral-950 font-medium rounded-xl hover:bg-neutral-200 transition-all duration-200 active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.05)] border border-transparent hover:border-neutral-300">
+                        <button className="w-full flex items-center justify-center gap-3 px-4 py-3.5 bg-white text-neutral-950 font-medium rounded-xl hover:bg-neutral-200 transition-all duration-200 shadow-[0_0_20px_rgba(255,255,255,0.05)] border border-transparent">
                             <svg className="w-5 h-5" viewBox="0 0 24 24">
                                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
                                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
@@ -51,32 +46,20 @@ export default function Home() {
                             Continuar con Google
                         </button>
 
-                        {/* Separador */}
                         <div className="relative flex items-center py-2">
                             <div className="flex-grow border-t border-neutral-800"></div>
                             <span className="flex-shrink-0 mx-4 text-neutral-600 text-sm font-medium uppercase tracking-wider">o</span>
                             <div className="flex-grow border-t border-neutral-800"></div>
                         </div>
 
-                        {/* Iniciar Sesión Tradicional */}
                         <div className="text-center">
                             <p className="text-neutral-400">
-                                ¿Ya tienes una cuenta?{' '}
-                                <a href="#" className="text-blue-500 font-medium hover:text-blue-400 hover:underline transition-colors underline-offset-4">
-                                    Iniciar sesión
-                                </a>
+                                ¿Ya tienes una cuenta? <a href="#" className="text-blue-500 font-medium hover:text-blue-400 transition-colors">Iniciar sesión</a>
                             </p>
                         </div>
-
                     </div>
                 </div>
-
-                {/* Pie de página discreto */}
-                <div className="absolute bottom-8 text-center w-full text-xs text-neutral-600">
-                    Al avanzar, aceptas las Condiciones del servicio y la Política de privacidad.
-                </div>
             </div>
-
         </div>
     );
 }
