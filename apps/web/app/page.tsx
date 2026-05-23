@@ -38,72 +38,72 @@ export default function Home() {
                   <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
                 </svg>
                 Continuar con Google
+              </button>
             </Link>
-          </button>
-          <button className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-neutral-900 text-white font-medium rounded-xl border border-neutral-800 hover:bg-neutral-800 transition-all duration-200">
-            Iniciar sesión con Email
-          </button>
-        </div>
-      </div>
-
-      {/* PANEL DERECHO: Mockup de Tablero Estilo Monday */}
-      <div className="hidden lg:block w-1/2 relative perspective-1000">
-        <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 rounded-2xl transform rotate-3 scale-105 blur-lg"></div>
-
-        <div className="relative bg-[#1c1c21] border border-neutral-800 rounded-2xl shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500 overflow-hidden">
-
-          {/* Header del tablero */}
-          <div className="flex items-center gap-2 p-4 border-b border-neutral-800 bg-[#232329]">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <div className="ml-4 font-medium text-sm text-neutral-300">Campaña Q3 - Marketing</div>
-          </div>
-
-          {/* Filas de Tareas */}
-          <div className="p-5 space-y-4">
-
-            {/* Tarea 1 */}
-            <div className="flex items-center justify-between group">
-              <div className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded border border-neutral-700 bg-neutral-800 flex items-center justify-center group-hover:border-blue-500 transition-colors"></div>
-                <span className="text-sm font-medium text-neutral-200">Diseño de Landing Page</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white border-2 border-[#1c1c21]">EM</div>
-                <span className="w-32 py-1.5 text-center text-xs font-bold rounded bg-[#00c875] text-white shadow-sm">Completado</span>
-              </div>
-            </div>
-
-            {/* Tarea 2 */}
-            <div className="flex items-center justify-between group">
-              <div className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded border border-neutral-700 bg-neutral-800 flex items-center justify-center group-hover:border-blue-500 transition-colors"></div>
-                <span className="text-sm font-medium text-neutral-200">Integración de Base de Datos</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold text-white border-2 border-[#1c1c21]">AI</div>
-                <span className="w-32 py-1.5 text-center text-xs font-bold rounded bg-[#fdab3d] text-white shadow-sm">En proceso</span>
-              </div>
-            </div>
-
-            {/* Tarea 3 */}
-            <div className="flex items-center justify-between group">
-              <div className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded border border-neutral-700 bg-neutral-800 flex items-center justify-center group-hover:border-blue-500 transition-colors"></div>
-                <span className="text-sm font-medium text-neutral-200">Revisión de Seguridad</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-neutral-600 flex items-center justify-center text-xs font-bold text-white border-2 border-[#1c1c21]">JS</div>
-                <span className="w-32 py-1.5 text-center text-xs font-bold rounded bg-[#e2445c] text-white shadow-sm">Estancado</span>
-              </div>
-            </div>
-
+            <button className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-neutral-900 text-white font-medium rounded-xl border border-neutral-800 hover:bg-neutral-800 transition-all duration-200">
+              Iniciar sesión con Email
+            </button>
           </div>
         </div>
-      </div>
 
-    </div>
+        {/* PANEL DERECHO: Mockup de Tablero Estilo Monday */}
+        <div className="hidden lg:block w-1/2 relative perspective-1000">
+          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 rounded-2xl transform rotate-3 scale-105 blur-lg"></div>
+
+          <div className="relative bg-[#1c1c21] border border-neutral-800 rounded-2xl shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500 overflow-hidden">
+
+            {/* Header del tablero */}
+            <div className="flex items-center gap-2 p-4 border-b border-neutral-800 bg-[#232329]">
+              <div className="w-3 h-3 rounded-full bg-red-500"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              <div className="ml-4 font-medium text-sm text-neutral-300">Campaña Q3 - Marketing</div>
+            </div>
+
+            {/* Filas de Tareas */}
+            <div className="p-5 space-y-4">
+
+              {/* Tarea 1 */}
+              <div className="flex items-center justify-between group">
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded border border-neutral-700 bg-neutral-800 flex items-center justify-center group-hover:border-blue-500 transition-colors"></div>
+                  <span className="text-sm font-medium text-neutral-200">Diseño de Landing Page</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white border-2 border-[#1c1c21]">EM</div>
+                  <span className="w-32 py-1.5 text-center text-xs font-bold rounded bg-[#00c875] text-white shadow-sm">Completado</span>
+                </div>
+              </div>
+
+              {/* Tarea 2 */}
+              <div className="flex items-center justify-between group">
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded border border-neutral-700 bg-neutral-800 flex items-center justify-center group-hover:border-blue-500 transition-colors"></div>
+                  <span className="text-sm font-medium text-neutral-200">Integración de Base de Datos</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold text-white border-2 border-[#1c1c21]">AI</div>
+                  <span className="w-32 py-1.5 text-center text-xs font-bold rounded bg-[#fdab3d] text-white shadow-sm">En proceso</span>
+                </div>
+              </div>
+
+              {/* Tarea 3 */}
+              <div className="flex items-center justify-between group">
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded border border-neutral-700 bg-neutral-800 flex items-center justify-center group-hover:border-blue-500 transition-colors"></div>
+                  <span className="text-sm font-medium text-neutral-200">Revisión de Seguridad</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-neutral-600 flex items-center justify-center text-xs font-bold text-white border-2 border-[#1c1c21]">JS</div>
+                  <span className="w-32 py-1.5 text-center text-xs font-bold rounded bg-[#e2445c] text-white shadow-sm">Estancado</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div >
   );
 }
