@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "../globals.css"; // Asumiendo que Tailwind está configurado aquí
+import "./globals.css"; // Asumiendo que Tailwind está configurado aquí
 
 export const metadata: Metadata = {
   title: "DiTodo | Trabaja más inteligente",
