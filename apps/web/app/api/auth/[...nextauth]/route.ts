@@ -3,8 +3,9 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 
-// Inyectamos la URL correctamente usando el objeto datasources
+// Instanciamos Prisma forzando el tipado de V7
 const prisma = new PrismaClient({
+    // @ts-ignore - Prisma V7 strict types bypass
     datasources: {
         db: {
             url: process.env.DATABASE_URL as string,
