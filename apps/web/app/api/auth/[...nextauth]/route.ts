@@ -3,8 +3,10 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 
-// Instanciamos Prisma
-const prisma = new PrismaClient();
+// Prisma V7 exige inyectar la URL programáticamente aquí:
+const prisma = new PrismaClient({
+    datasourceUrl: process.env.DATABASE_URL,
+});
 
 // Configuramos las opciones de autenticación
 const authOptions = {
