@@ -101,6 +101,11 @@ model User {
   // Relaciones
   accounts      Account[]
   sessions      Session[]
+
+// 🚀 NUEVAS RELACIONES: Un usuario tiene muchos eventos y muchas notas
+  events        Event[]
+  notes         Note[]
+
   groups        UserGroup[]
   tasksAssigned Task[]      @relation("TaskAssignee")
   files         FileAsset[]
@@ -108,6 +113,63 @@ model User {
   @@map("users")
 }
 
+// ------------------------------------------------------
+// 🚀 NUEVOS MODELOS PARA DITODO
+// ------------------------------------------------------
+
+model Event {
+  id          String       @id @default(cuid())
+  title       String
+  description String?      @db.Text
+  
+  // Tiempos (Opcionales para permitir Drafts)
+  startDate   DateTime?
+  endDate     DateTime?
+  isAllDay    Boolean      @default(false)
+  
+  // Estados y Semáforo visual
+  status      String       @default("DRAFT") // DRAFT, TODO, IN_PROGRESS, DONE
+  urgency     String       @default("NONE")  // RED, YELLOW, GREEN, NONE
+  
+  // Relaciones
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  attachments Attachment[]
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Note {
+  id          String       @id @default(cuid())
+  content     String?      @db.Text
+  type        String       @default("TEXT") // TEXT, AUDIO, VIDEO
+  
+  // Relaciones
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  attachments Attachment[]
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Attachment {
+  id          String    @id @default(cuid())
+  url         String    // La ruta donde se guardará el archivo físicamente o en la nube
+  fileName    String
+  fileType    String    // Ej: image/jpeg, audio/mp3, application/pdf
+  size        Int?      // Tamaño en bytes
+
+  // Un adjunto puede pertenecer a un Evento o a una Nota (Opcional)
+  eventId     String?
+  event       Event?    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  
+  noteId      String?
+  note        Note?     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime  @default(now())
+}
 
 // ------------------------------------------------------
 // 🏢 1. ESPACIO DE TRABAJO (Workspace - Ex Account)
