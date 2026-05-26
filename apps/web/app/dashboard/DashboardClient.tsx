@@ -53,8 +53,8 @@ export default function DashboardClient({ session }: DashboardClientProps) {
                 // Limpiar formulario
                 setTitle("");
                 setDescription("");
-                setStartDate("");
-                setEndDate("");
+                setStartDate(null);
+                setEndDate(null);
                 setUrgency("NONE");
                 setStatus("TODO");
                 // Refrescar los componentes del servidor para ver el nuevo evento
