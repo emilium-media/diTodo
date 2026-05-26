@@ -1,1 +1,40 @@
 @import "tailwindcss";
+
+/* Customización del Calendario React-DatePicker para Modo Oscuro Premium */
+.react-datepicker {
+    @apply bg-[#11111d] border-neutral-800 !important;
+}
+
+.react-datepicker__header {
+    @apply bg-[#1c1c21] border-b border-neutral-800 !important;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+    @apply text-white !important;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+    @apply text-neutral-300 hover:bg-neutral-800 hover:text-white rounded-md transition-colors !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__time-list-item--selected {
+    @apply bg-blue-600 text-white font-bold shadow-md hover:bg-blue-700 !important;
+}
+
+.react-datepicker__time-container {
+    @apply border-l border-neutral-800 !important;
+}
+
+.react-datepicker__time {
+    @apply bg-[#11111d] text-white !important;
+}
+
+.react-datepicker__time-list-item {
+    @apply hover:bg-neutral-800 transition-colors !important;
+}

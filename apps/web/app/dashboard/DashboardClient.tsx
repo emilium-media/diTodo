@@ -4,6 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import es from "date-fns/locale/es"; // Para que el calendario esté en español
+
+// Registramos el idioma español
+registerLocale("es", es);
 
 interface DashboardClientProps {
     session: any;
@@ -17,8 +23,10 @@ export default function DashboardClient({ session }: DashboardClientProps) {
     // Estados del Formulario
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    //const [startDate, setStartDate] = useState("");
+    const [startDate, setStartDate] = useState<Date | null>(null);
+    //const [endDate, setEndDate] = useState("");
+    const [endDate, setEndDate] = useState<Date | null>(null);
     const [urgency, setUrgency] = useState("NONE");
     const [status, setStatus] = useState("TODO");
 
@@ -199,23 +207,46 @@ export default function DashboardClient({ session }: DashboardClientProps) {
                             </div>
 
                             {/* Fechas (Rango Horario) */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1.5">Hora Inicio (Opcional, vacío = Draft)</label>
-                                    <input
-                                        type="datetime-local"
-                                        value={startDate}
-                                        onChange={(e) => setStartDate(e.target.value)}
-                                        className="w-full bg-[#11111d] border border-neutral-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 transition-colors color-scheme-dark"
+                            {/* Fechas (Calendario Premium Interactivo) */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-50">
+
+                                {/* INICIO */}
+                                <div className="flex flex-col">
+                                    <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1.5">Inicio (Vacío = Draft)</label>
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={(date: Date | null) => setStartDate(date)}
+                                        showTimeSelect
+                                        timeFormat="HH:mm"
+                                        timeIntervals={15} // Intervalos de 15 minutos en el dropdown
+                                        timeCaption="Hora"
+                                        dateFormat="d 'de' MMMM, yyyy - HH:mm"
+                                        locale="es"
+                                        placeholderText="Seleccionar fecha y hora..."
+                                        className="w-full bg-[#11111d] border border-neutral-800 rounded-xl p-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-blue-500 transition-colors"
+                                        calendarClassName="bg-[#0a0a12] border border-neutral-800 text-white shadow-2xl rounded-xl p-2 font-sans"
+                                        // Tailwind styles para el popup del calendario (sobrescribiendo los default feos)
+                                        wrapperClassName="w-full"
                                     />
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1.5">Hora Fin (Opcional)</label>
-                                    <input
-                                        type="datetime-local"
-                                        value={endDate}
-                                        onChange={(e) => setEndDate(e.target.value)}
-                                        className="w-full bg-[#11111d] border border-neutral-800 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 transition-colors color-scheme-dark"
+
+                                {/* FIN */}
+                                <div className="flex flex-col">
+                                    <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1.5">Fin (Opcional)</label>
+                                    <DatePicker
+                                        selected={endDate}
+                                        onChange={(date: Date | null) => setEndDate(date)}
+                                        showTimeSelect
+                                        timeFormat="HH:mm"
+                                        timeIntervals={15}
+                                        timeCaption="Hora"
+                                        dateFormat="d 'de' MMMM, yyyy - HH:mm"
+                                        locale="es"
+                                        placeholderText="Seleccionar fecha y hora..."
+                                        minDate={startDate || undefined} // No deja elegir un fin anterior al inicio
+                                        className="w-full bg-[#11111d] border border-neutral-800 rounded-xl p-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-blue-500 transition-colors"
+                                        calendarClassName="bg-[#0a0a12] border border-neutral-800 text-white shadow-2xl rounded-xl p-2 font-sans"
+                                        wrapperClassName="w-full"
                                     />
                                 </div>
                             </div>
