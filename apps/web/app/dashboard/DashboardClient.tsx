@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import es from "date-fns/locale/es"; // Para que el calendario esté en español
+import { es } from "date-fns/locale/es"; // Para que el calendario esté en español
 
 // Registramos el idioma español
 registerLocale("es", es);
