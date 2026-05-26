@@ -20,7 +20,7 @@ export default function RootLayout({
                 <Providers>
                     {children}
                 </Providers>
-            </td>
+            </body>
         </html>
     );
 }
