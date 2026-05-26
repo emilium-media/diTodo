@@ -54,7 +54,35 @@
     border-left-color: #262626;
 }
 
-:root .react-datepicker__time {
-    background-color: #11111d;
-    color: white;
+/* ----------------------------------------------------------------- */
+/* PANEL DE HORAS: Fondo Gris, Texto Negro (Excepto el seleccionado) */
+/* ----------------------------------------------------------------- */
+
+:root .react-datepicker__time-container .react-datepicker__time {
+    background-color: #e5e7eb !important;
+    /* Fondo gris claro general */
+}
+
+:root .react-datepicker__time-list-item {
+    background-color: #e5e7eb !important;
+    /* Fondo gris claro */
+    color: #000000 !important;
+    /* Texto negro */
+    transition: background-color 0.2s ease;
+}
+
+:root .react-datepicker__time-list-item:hover {
+    background-color: #d1d5db !important;
+    /* Gris un poco más oscuro al pasar el mouse */
+    color: #000000 !important;
+}
+
+/* El elemento Seleccionado (Azul y Blanco) */
+:root .react-datepicker__time-list-item--selected,
+:root .react-datepicker__time-list-item--selected:hover {
+    background-color: #2563eb !important;
+    /* Fondo azul */
+    color: #ffffff !important;
+    /* Texto blanco */
+    font-weight: bold !important;
 }
