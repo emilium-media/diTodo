@@ -1,21 +1,13 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter as AuthPrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
-import { PrismaMariadb } from "@prisma/adapter-mariadb";
-import * as mariadb from "mariadb";
 
-// 1. Prisma V7: Creamos el pool usando el driver oficial (100% compatible con tu MySQL)
-const pool = mariadb.createPool(process.env.DATABASE_URL as string);
-
-// 2. Envolvemos el pool en el adaptador oficial
-const adapter = new PrismaMariadb(pool);
-
-// 3. Instanciamos Prisma entregándole el adaptador (¡La única forma válida en V7!)
-const prisma = new PrismaClient({ adapter });
+// La V5 es mágica: solo necesita esto
+const prisma = new PrismaClient();
 
 const authOptions = {
-    adapter: AuthPrismaAdapter(prisma),
+    adapter: PrismaAdapter(prisma),
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
