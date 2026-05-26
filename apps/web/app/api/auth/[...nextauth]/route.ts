@@ -3,9 +3,13 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 
-// Prisma V7 exige inyectar la URL programáticamente aquí:
+// Inyectamos la URL correctamente usando el objeto datasources
 const prisma = new PrismaClient({
-    datasourceUrl: process.env.DATABASE_URL,
+    datasources: {
+        db: {
+            url: process.env.DATABASE_URL as string,
+        },
+    },
 });
 
 // Configuramos las opciones de autenticación
