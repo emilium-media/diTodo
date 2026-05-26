@@ -1,40 +1,60 @@
 @import "tailwindcss";
 
 /* Customización del Calendario React-DatePicker para Modo Oscuro Premium */
-.react-datepicker {
-    @apply bg-[#11111d] border-neutral-800 !important;
+.react-datepicker-wrapper {
+    width: 100%;
 }
 
-.react-datepicker__header {
-    @apply bg-[#1c1c21] border-b border-neutral-800 !important;
+:root .react-datepicker {
+    background-color: #11111d;
+    border-color: #262626;
+    /* neutral-800 */
 }
 
-.react-datepicker__current-month,
-.react-datepicker-time__header,
-.react-datepicker-year-header {
-    @apply text-white !important;
+:root .react-datepicker__header {
+    background-color: #1c1c21;
+    border-bottom-color: #262626;
 }
 
-.react-datepicker__day-name,
-.react-datepicker__day,
-.react-datepicker__time-name {
-    @apply text-neutral-300 hover:bg-neutral-800 hover:text-white rounded-md transition-colors !important;
+:root .react-datepicker__current-month,
+:root .react-datepicker-time__header,
+:root .react-datepicker-year-header {
+    color: white;
 }
 
-.react-datepicker__day--selected,
-.react-datepicker__day--keyboard-selected,
-.react-datepicker__time-list-item--selected {
-    @apply bg-blue-600 text-white font-bold shadow-md hover:bg-blue-700 !important;
+:root .react-datepicker__day-name,
+:root .react-datepicker__day,
+:root .react-datepicker__time-name {
+    color: #d4d4d8;
+    /* neutral-300 */
+    transition: all 0.2s ease-in-out;
 }
 
-.react-datepicker__time-container {
-    @apply border-l border-neutral-800 !important;
+:root .react-datepicker__day:hover,
+:root .react-datepicker__time-list-item:hover {
+    background-color: #262626;
+    color: white;
 }
 
-.react-datepicker__time {
-    @apply bg-[#11111d] text-white !important;
+:root .react-datepicker__day--selected,
+:root .react-datepicker__day--keyboard-selected,
+:root .react-datepicker__time-list-item--selected {
+    background-color: #2563eb !important;
+    /* blue-600 */
+    color: white !important;
+    font-weight: bold;
 }
 
-.react-datepicker__time-list-item {
-    @apply hover:bg-neutral-800 transition-colors !important;
+:root .react-datepicker__day--selected:hover {
+    background-color: #1d4ed8 !important;
+    /* blue-700 */
+}
+
+:root .react-datepicker__time-container {
+    border-left-color: #262626;
+}
+
+:root .react-datepicker__time {
+    background-color: #11111d;
+    color: white;
 }
