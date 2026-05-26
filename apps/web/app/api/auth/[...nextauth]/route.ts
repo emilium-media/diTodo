@@ -1,21 +1,21 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaAdapter as AuthPrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
+import { PrismaMariadb } from "@prisma/adapter-mariadb";
+import * as mariadb from "mariadb";
 
-// Instanciamos Prisma forzando el tipado de V7
-const prisma = new PrismaClient({
-    // @ts-ignore - Prisma V7 strict types bypass
-    datasources: {
-        db: {
-            url: process.env.DATABASE_URL as string,
-        },
-    },
-});
+// 1. Prisma V7: Creamos el pool usando el driver oficial (100% compatible con tu MySQL)
+const pool = mariadb.createPool(process.env.DATABASE_URL as string);
 
-// Configuramos las opciones de autenticación
+// 2. Envolvemos el pool en el adaptador oficial
+const adapter = new PrismaMariadb(pool);
+
+// 3. Instanciamos Prisma entregándole el adaptador (¡La única forma válida en V7!)
+const prisma = new PrismaClient({ adapter });
+
 const authOptions = {
-    adapter: PrismaAdapter(prisma),
+    adapter: AuthPrismaAdapter(prisma),
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -23,10 +23,9 @@ const authOptions = {
         }),
     ],
     session: {
-        strategy: "jwt" as const, // Usamos JWT para mayor velocidad en consultas
+        strategy: "jwt" as const,
     },
     callbacks: {
-        // Inyectamos el ID del usuario en la sesión para poder usarlo en la base de datos
         async session({ session, token }: any) {
             if (session?.user) {
                 session.user.id = token.sub;
@@ -36,6 +35,5 @@ const authOptions = {
     },
 };
 
-// Next.js App Router requiere exportar los métodos GET y POST
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
